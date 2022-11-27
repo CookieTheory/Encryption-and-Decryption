@@ -45,11 +45,7 @@ namespace Encryption_and_Decryption
                     fileText = Convert.ToBase64String(data);
                 }
                 richTextBoxFile.Text = fileText;
-            }/*
-            StreamReader sr = new StreamReader(fileLocation);
-            fileText = sr.ReadToEnd();
-            richTextBoxFile.Text = fileText;
-            sr.Close();*/
+            }
         }
 
         private void buttonOpenAESKey_Click(object sender, EventArgs e)
@@ -199,21 +195,42 @@ namespace Encryption_and_Decryption
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
-                    binaryWriter.Write(encryptedFile.Length);
-                    binaryWriter.Write(encryptedFile);
+                    try
+                    {
+                        binaryWriter.Write(encryptedFile.Length);
+                        binaryWriter.Write(encryptedFile);
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
         }
 
         private static void LoadIVAndKey(AesCryptoServiceProvider decryptAes, string filepath)
         {
-            using (FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+            try
             {
-                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                using (FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read))
                 {
-                    decryptAes.IV = binaryReader.ReadBytes(binaryReader.ReadInt32());
-                    decryptAes.Key = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    {
+                        try
+                        {
+                            decryptAes.IV = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                            decryptAes.Key = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Odabrani file nije tajni ključ");
+                        }
+                    }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Za dekripciju potreban je tajni ključ");
             }
         }
 
