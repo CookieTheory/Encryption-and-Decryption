@@ -18,6 +18,7 @@ namespace Encryption_and_Decryption
     {
         string fileLocation = "";
         string fileText = "";
+        string decryptFilepath = "";
         AesCryptoServiceProvider decryptAes = new AesCryptoServiceProvider();
         byte[] data;
         public formAES()
@@ -56,8 +57,7 @@ namespace Encryption_and_Decryption
             openAESKey.ShowDialog();
 
             textBoxKeyLocation.Text = openAESKey.FileName;
-            string decryptFilepath = openAESKey.FileName;
-            LoadIVAndKey(decryptAes, decryptFilepath);
+            decryptFilepath = openAESKey.FileName;
         }
 
         private void buttonEncrypt_Click(object sender, EventArgs e)
@@ -75,6 +75,7 @@ namespace Encryption_and_Decryption
         private void buttonDecrypt_Click(object sender, EventArgs e)
         {
             data = LoadEncryptedFile(data, fileLocation);
+            LoadIVAndKey(decryptAes, decryptFilepath);
             string decrypt = DecryptStringFromBytes_Aes(data, decryptAes.Key, decryptAes.IV);
 
             richTextBoxResult.Text = decrypt;
@@ -143,21 +144,24 @@ namespace Encryption_and_Decryption
 
                 // Create a decryptor to perform the stream transform.
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+                try
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    // Create the streams used for decryption.
+                    using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
 
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
-                            plaintext = srDecrypt.ReadToEnd();
+                                // Read the decrypted bytes from the decrypting stream
+                                // and place them in a string.
+                                plaintext = srDecrypt.ReadToEnd();
+                            }
                         }
                     }
                 }
+                catch { MessageBox.Show("Nije uspješno dekriptiranje!"); }
             }
 
             return plaintext;
@@ -223,7 +227,7 @@ namespace Encryption_and_Decryption
                         }
                         catch
                         {
-                            MessageBox.Show("Odabrani file nije tajni ključ");
+                            MessageBox.Show("Odabrana datoteka nije tajni ključ");
                         }
                     }
                 }
