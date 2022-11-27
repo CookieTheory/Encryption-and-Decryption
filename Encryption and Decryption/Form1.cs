@@ -24,5 +24,13 @@ namespace Encryption_and_Decryption
             newForm.ShowDialog();
             this.Show();
         }
+
+        private void buttonRSA_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            formRSA newForm = new formRSA();
+            newForm.ShowDialog();
+            this.Show();
+        }
     }
 }

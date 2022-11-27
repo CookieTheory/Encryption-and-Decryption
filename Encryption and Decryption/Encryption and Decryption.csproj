@@ -58,6 +58,12 @@
     <Compile Include="formAES.Designer.cs">
       <DependentUpon>formAES.cs</DependentUpon>
     </Compile>
+    <Compile Include="formRSA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRSA.Designer.cs">
+      <DependentUpon>formRSA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
