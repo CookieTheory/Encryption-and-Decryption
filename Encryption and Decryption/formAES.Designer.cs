@@ -35,7 +35,7 @@
             this.buttonEncrypt = new System.Windows.Forms.Button();
             this.buttonDecrypt = new System.Windows.Forms.Button();
             this.richTextBoxResult = new System.Windows.Forms.RichTextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxKeyLocation = new System.Windows.Forms.TextBox();
             this.buttonOpenAESKey = new System.Windows.Forms.Button();
             this.openAESKey = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
@@ -99,12 +99,12 @@
             this.richTextBoxResult.TabIndex = 5;
             this.richTextBoxResult.Text = "";
             // 
-            // textBox1
+            // textBoxKeyLocation
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 68);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(313, 20);
-            this.textBox1.TabIndex = 6;
+            this.textBoxKeyLocation.Location = new System.Drawing.Point(15, 68);
+            this.textBoxKeyLocation.Name = "textBoxKeyLocation";
+            this.textBoxKeyLocation.Size = new System.Drawing.Size(313, 20);
+            this.textBoxKeyLocation.TabIndex = 6;
             // 
             // buttonOpenAESKey
             // 
@@ -114,6 +114,7 @@
             this.buttonOpenAESKey.TabIndex = 7;
             this.buttonOpenAESKey.Text = "...";
             this.buttonOpenAESKey.UseVisualStyleBackColor = true;
+            this.buttonOpenAESKey.Click += new System.EventHandler(this.buttonOpenAESKey_Click);
             // 
             // openAESKey
             // 
@@ -145,7 +146,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonOpenAESKey);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxKeyLocation);
             this.Controls.Add(this.richTextBoxResult);
             this.Controls.Add(this.buttonDecrypt);
             this.Controls.Add(this.buttonEncrypt);
@@ -168,7 +169,7 @@
         private System.Windows.Forms.Button buttonEncrypt;
         private System.Windows.Forms.Button buttonDecrypt;
         private System.Windows.Forms.RichTextBox richTextBoxResult;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxKeyLocation;
         private System.Windows.Forms.Button buttonOpenAESKey;
         private System.Windows.Forms.OpenFileDialog openAESKey;
         private System.Windows.Forms.Label label1;

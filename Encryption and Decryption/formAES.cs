@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Encryption_and_Decryption
 {
@@ -16,9 +18,8 @@ namespace Encryption_and_Decryption
     {
         string fileLocation = "";
         string fileText = "";
+        AesCryptoServiceProvider decryptAes = new AesCryptoServiceProvider();
         byte[] data;
-        byte[] key;
-        byte[] iv;
         public formAES()
         {
             InitializeComponent();
@@ -34,10 +35,33 @@ namespace Encryption_and_Decryption
             textBoxFileLocation.Text = openFileAES.FileName;
             fileLocation = openFileAES.FileName;
 
+
+            using (var sr = new StreamReader(fileLocation, Encoding.UTF8))
+            {
+                fileText = sr.ReadToEnd();
+                if (fileText.Contains("�"))
+                {
+                    data = LoadEncryptedFile(data, fileLocation);
+                    fileText = Convert.ToBase64String(data);
+                }
+                richTextBoxFile.Text = fileText;
+            }/*
             StreamReader sr = new StreamReader(fileLocation);
             fileText = sr.ReadToEnd();
             richTextBoxFile.Text = fileText;
-            sr.Close();
+            sr.Close();*/
+        }
+
+        private void buttonOpenAESKey_Click(object sender, EventArgs e)
+        {
+            openAESKey.Filter = "Text File|*.txt";
+            openAESKey.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openAESKey.Title = "Open key for AES decryption";
+            openAESKey.ShowDialog();
+
+            textBoxKeyLocation.Text = openAESKey.FileName;
+            string decryptFilepath = openAESKey.FileName;
+            LoadIVAndKey(decryptAes, decryptFilepath);
         }
 
         private void buttonEncrypt_Click(object sender, EventArgs e)
@@ -47,9 +71,6 @@ namespace Encryption_and_Decryption
                 byte[] encrypted = EncryptStringToBytes_Aes(fileText, myAes.Key, myAes.IV);
                 SaveIVAndKey(myAes);
                 SaveEncryptedFile(encrypted);
-                key = myAes.Key;
-                iv= myAes.IV;
-                data = encrypted;
 
                 richTextBoxResult.Text = Convert.ToBase64String(encrypted);
             }
@@ -57,9 +78,10 @@ namespace Encryption_and_Decryption
 
         private void buttonDecrypt_Click(object sender, EventArgs e)
         {
-            string roundtrip = DecryptStringFromBytes_Aes(data, key, iv);
+            data = LoadEncryptedFile(data, fileLocation);
+            string decrypt = DecryptStringFromBytes_Aes(data, decryptAes.Key, decryptAes.IV);
 
-            richTextBoxResult.Text = roundtrip;
+            richTextBoxResult.Text = decrypt;
         }
 
         byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
@@ -179,6 +201,30 @@ namespace Encryption_and_Decryption
                 {
                     binaryWriter.Write(encryptedFile.Length);
                     binaryWriter.Write(encryptedFile);
+                }
+            }
+        }
+
+        private static void LoadIVAndKey(AesCryptoServiceProvider decryptAes, string filepath)
+        {
+            using (FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+            {
+                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                {
+                    decryptAes.IV = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                    decryptAes.Key = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                }
+            }
+        }
+
+        private static byte[] LoadEncryptedFile(byte[] text, string filepath)
+        {
+            using (FileStream fileStream = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+            {
+                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                {
+                    text = binaryReader.ReadBytes(binaryReader.ReadInt32());
+                    return text;
                 }
             }
         }
