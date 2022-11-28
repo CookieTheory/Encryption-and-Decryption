@@ -186,6 +186,7 @@
             this.buttonHash.TabIndex = 18;
             this.buttonHash.Text = "Hash";
             this.buttonHash.UseVisualStyleBackColor = true;
+            this.buttonHash.Click += new System.EventHandler(this.buttonHash_Click);
             // 
             // buttonSign
             // 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,8 +19,9 @@ namespace Encryption_and_Decryption
         private string fileText = "";
         string decryptFilepath = "";
         private RSAParameters helperRSA = new RSAParameters();
-        byte[] decryptData = null;
-        byte[] data;
+        private byte[] decryptData = null;
+        private byte[] data;
+        private byte[] hash;
         public formRSA()
         {
             InitializeComponent();
@@ -95,7 +97,7 @@ namespace Encryption_and_Decryption
                     byte[] encryptedData = RSAEncrypt(dataToEncrypt, helperRSA, false);
                     if(encryptedData != null)
                     {
-                        SaveEncryptedFile(encryptedData);
+                        SaveEncryptedFile(encryptedData, "rsa_enkriptirano");
                         richTextBoxResult.Text = Convert.ToBase64String(encryptedData);
                     }
 
@@ -213,7 +215,7 @@ namespace Encryption_and_Decryption
             }
         }
 
-        private static void SaveEncryptedFile(byte[] encryptedFile)
+        private static void SaveEncryptedFile(byte[] encryptedFile, string filename)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
             if (!Directory.Exists(directory))
@@ -221,7 +223,7 @@ namespace Encryption_and_Decryption
                 Directory.CreateDirectory(directory);
             }
 
-            using (FileStream fileStream = new FileStream(directory + "/rsa_enkriptirano.txt", FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(directory + "/" + filename + ".txt", FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -338,6 +340,56 @@ namespace Encryption_and_Decryption
                     text = binaryReader.ReadBytes(binaryReader.ReadInt32());
                     return text;
                 }
+            }
+        }
+
+        //From here on out: Hashing and Digital signatures
+
+        private void buttonHash_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var sr = new StreamReader(fileLocation, Encoding.UTF8))
+                {
+                    fileText = sr.ReadToEnd(); if (fileText.Contains("�"))
+                    {
+                        data = LoadEncryptedFile(data, fileLocation);
+                        fileText = Convert.ToBase64String(data);
+
+                    }else
+                    {
+                        UnicodeEncoding ByteConverter = new UnicodeEncoding();
+                        data = ByteConverter.GetBytes(fileText);
+                    }
+                    hash = HashBytes(data);
+                    SaveEncryptedFile(data, "hash256");
+                    richTextBoxHash.Text = Convert.ToBase64String(hash);
+                }
+            }
+            catch
+            {
+                openFileRSA.FileName = "";
+                textBoxFileLocation.Text = openFileRSA.FileName;
+                fileLocation = openFileRSA.FileName;
+            }
+        }
+
+        public static byte[] HashBytes(byte[] data)
+        {
+            using (SHA256 mySHA256 = SHA256.Create())
+            {
+                byte[] hashValue = null;
+                try
+                {
+                    hashValue = mySHA256.ComputeHash(data);
+                    // Write the hash value of the file to the console.
+                    //PrintByteArray(hashValue);
+                }
+                catch
+                {
+                    MessageBox.Show("Neuspješno hashiranje.");
+                }
+                return hashValue;
             }
         }
     }
