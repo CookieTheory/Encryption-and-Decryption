@@ -40,6 +40,19 @@
             this.buttonEncrypt = new System.Windows.Forms.Button();
             this.richTextBoxFile = new System.Windows.Forms.RichTextBox();
             this.openRSAKey = new System.Windows.Forms.OpenFileDialog();
+            this.groupBoxHash = new System.Windows.Forms.GroupBox();
+            this.richTextBoxHash = new System.Windows.Forms.RichTextBox();
+            this.buttonHash = new System.Windows.Forms.Button();
+            this.buttonSign = new System.Windows.Forms.Button();
+            this.richTextBoxSignResult = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonOpenSignature = new System.Windows.Forms.Button();
+            this.textBoxSignedLocation = new System.Windows.Forms.TextBox();
+            this.buttonCheckSignature = new System.Windows.Forms.Button();
+            this.richTextBoxSign = new System.Windows.Forms.RichTextBox();
+            this.textBoxCheckResult = new System.Windows.Forms.TextBox();
+            this.openFileSigned = new System.Windows.Forms.OpenFileDialog();
+            this.groupBoxHash.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -47,7 +60,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 13);
+            this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 15;
             this.label2.Text = "Javni ili tajni ključ:";
             // 
@@ -138,11 +151,119 @@
             // 
             this.openRSAKey.FileName = "openFileDialog1";
             // 
+            // groupBoxHash
+            // 
+            this.groupBoxHash.Controls.Add(this.textBoxCheckResult);
+            this.groupBoxHash.Controls.Add(this.richTextBoxSign);
+            this.groupBoxHash.Controls.Add(this.buttonCheckSignature);
+            this.groupBoxHash.Controls.Add(this.label3);
+            this.groupBoxHash.Controls.Add(this.buttonOpenSignature);
+            this.groupBoxHash.Controls.Add(this.textBoxSignedLocation);
+            this.groupBoxHash.Controls.Add(this.richTextBoxSignResult);
+            this.groupBoxHash.Controls.Add(this.buttonSign);
+            this.groupBoxHash.Controls.Add(this.buttonHash);
+            this.groupBoxHash.Controls.Add(this.richTextBoxHash);
+            this.groupBoxHash.Location = new System.Drawing.Point(378, 13);
+            this.groupBoxHash.Name = "groupBoxHash";
+            this.groupBoxHash.Size = new System.Drawing.Size(368, 317);
+            this.groupBoxHash.TabIndex = 20;
+            this.groupBoxHash.TabStop = false;
+            this.groupBoxHash.Text = "Hash i digitalni potpis";
+            // 
+            // richTextBoxHash
+            // 
+            this.richTextBoxHash.Location = new System.Drawing.Point(6, 45);
+            this.richTextBoxHash.Name = "richTextBoxHash";
+            this.richTextBoxHash.Size = new System.Drawing.Size(356, 45);
+            this.richTextBoxHash.TabIndex = 17;
+            this.richTextBoxHash.Text = "";
+            // 
+            // buttonHash
+            // 
+            this.buttonHash.Location = new System.Drawing.Point(6, 19);
+            this.buttonHash.Name = "buttonHash";
+            this.buttonHash.Size = new System.Drawing.Size(356, 20);
+            this.buttonHash.TabIndex = 18;
+            this.buttonHash.Text = "Hash";
+            this.buttonHash.UseVisualStyleBackColor = true;
+            // 
+            // buttonSign
+            // 
+            this.buttonSign.Location = new System.Drawing.Point(6, 96);
+            this.buttonSign.Name = "buttonSign";
+            this.buttonSign.Size = new System.Drawing.Size(356, 20);
+            this.buttonSign.TabIndex = 19;
+            this.buttonSign.Text = "Potpiši";
+            this.buttonSign.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxSignResult
+            // 
+            this.richTextBoxSignResult.Location = new System.Drawing.Point(6, 212);
+            this.richTextBoxSignResult.Name = "richTextBoxSignResult";
+            this.richTextBoxSignResult.Size = new System.Drawing.Size(356, 45);
+            this.richTextBoxSignResult.TabIndex = 20;
+            this.richTextBoxSignResult.Text = "";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 170);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Digitalni potpis:";
+            // 
+            // buttonOpenSignature
+            // 
+            this.buttonOpenSignature.Location = new System.Drawing.Point(325, 186);
+            this.buttonOpenSignature.Name = "buttonOpenSignature";
+            this.buttonOpenSignature.Size = new System.Drawing.Size(37, 20);
+            this.buttonOpenSignature.TabIndex = 22;
+            this.buttonOpenSignature.Text = "...";
+            this.buttonOpenSignature.UseVisualStyleBackColor = true;
+            // 
+            // textBoxSignedLocation
+            // 
+            this.textBoxSignedLocation.Location = new System.Drawing.Point(6, 186);
+            this.textBoxSignedLocation.Name = "textBoxSignedLocation";
+            this.textBoxSignedLocation.Size = new System.Drawing.Size(313, 20);
+            this.textBoxSignedLocation.TabIndex = 21;
+            // 
+            // buttonCheckSignature
+            // 
+            this.buttonCheckSignature.Location = new System.Drawing.Point(6, 263);
+            this.buttonCheckSignature.Name = "buttonCheckSignature";
+            this.buttonCheckSignature.Size = new System.Drawing.Size(356, 20);
+            this.buttonCheckSignature.TabIndex = 24;
+            this.buttonCheckSignature.Text = "Provjeri potpis";
+            this.buttonCheckSignature.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxSign
+            // 
+            this.richTextBoxSign.Location = new System.Drawing.Point(6, 122);
+            this.richTextBoxSign.Name = "richTextBoxSign";
+            this.richTextBoxSign.Size = new System.Drawing.Size(356, 45);
+            this.richTextBoxSign.TabIndex = 25;
+            this.richTextBoxSign.Text = "";
+            // 
+            // textBoxCheckResult
+            // 
+            this.textBoxCheckResult.Location = new System.Drawing.Point(6, 289);
+            this.textBoxCheckResult.Name = "textBoxCheckResult";
+            this.textBoxCheckResult.ReadOnly = true;
+            this.textBoxCheckResult.Size = new System.Drawing.Size(356, 20);
+            this.textBoxCheckResult.TabIndex = 26;
+            // 
+            // openFileSigned
+            // 
+            this.openFileSigned.FileName = "openFileDialog1";
+            // 
             // formRSA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(761, 345);
+            this.Controls.Add(this.groupBoxHash);
             this.Controls.Add(this.richTextBoxResult);
             this.Controls.Add(this.buttonDecrypt);
             this.Controls.Add(this.buttonEncrypt);
@@ -155,6 +276,8 @@
             this.Controls.Add(this.textBoxFileLocation);
             this.Name = "formRSA";
             this.Text = "formRSA";
+            this.groupBoxHash.ResumeLayout(false);
+            this.groupBoxHash.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +297,17 @@
         private System.Windows.Forms.Button buttonEncrypt;
         private System.Windows.Forms.RichTextBox richTextBoxFile;
         private System.Windows.Forms.OpenFileDialog openRSAKey;
+        private System.Windows.Forms.GroupBox groupBoxHash;
+        private System.Windows.Forms.TextBox textBoxCheckResult;
+        private System.Windows.Forms.RichTextBox richTextBoxSign;
+        private System.Windows.Forms.Button buttonCheckSignature;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button buttonOpenSignature;
+        private System.Windows.Forms.TextBox textBoxSignedLocation;
+        private System.Windows.Forms.RichTextBox richTextBoxSignResult;
+        private System.Windows.Forms.Button buttonSign;
+        private System.Windows.Forms.Button buttonHash;
+        private System.Windows.Forms.RichTextBox richTextBoxHash;
+        private System.Windows.Forms.OpenFileDialog openFileSigned;
     }
 }
