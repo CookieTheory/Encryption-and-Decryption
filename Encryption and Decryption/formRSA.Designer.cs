@@ -30,7 +30,7 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonOpenAESKey = new System.Windows.Forms.Button();
+            this.buttonOpenRSAKey = new System.Windows.Forms.Button();
             this.textBoxKeyLocation = new System.Windows.Forms.TextBox();
             this.buttonOpenFileDialog = new System.Windows.Forms.Button();
             this.textBoxFileLocation = new System.Windows.Forms.TextBox();
@@ -39,6 +39,7 @@
             this.buttonDecrypt = new System.Windows.Forms.Button();
             this.buttonEncrypt = new System.Windows.Forms.Button();
             this.richTextBoxFile = new System.Windows.Forms.RichTextBox();
+            this.openRSAKey = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label2
@@ -48,7 +49,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 13);
             this.label2.TabIndex = 15;
-            this.label2.Text = "Tajni ključ (za dekripciju):";
+            this.label2.Text = "Javni ili tajni ključ:";
             // 
             // label1
             // 
@@ -59,14 +60,15 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Datoteka:";
             // 
-            // buttonOpenAESKey
+            // buttonOpenRSAKey
             // 
-            this.buttonOpenAESKey.Location = new System.Drawing.Point(334, 68);
-            this.buttonOpenAESKey.Name = "buttonOpenAESKey";
-            this.buttonOpenAESKey.Size = new System.Drawing.Size(37, 20);
-            this.buttonOpenAESKey.TabIndex = 13;
-            this.buttonOpenAESKey.Text = "...";
-            this.buttonOpenAESKey.UseVisualStyleBackColor = true;
+            this.buttonOpenRSAKey.Location = new System.Drawing.Point(334, 68);
+            this.buttonOpenRSAKey.Name = "buttonOpenRSAKey";
+            this.buttonOpenRSAKey.Size = new System.Drawing.Size(37, 20);
+            this.buttonOpenRSAKey.TabIndex = 13;
+            this.buttonOpenRSAKey.Text = "...";
+            this.buttonOpenRSAKey.UseVisualStyleBackColor = true;
+            this.buttonOpenRSAKey.Click += new System.EventHandler(this.buttonOpenRSAKey_Click);
             // 
             // textBoxKeyLocation
             // 
@@ -112,6 +114,7 @@
             this.buttonDecrypt.TabIndex = 18;
             this.buttonDecrypt.Text = "Decrypt";
             this.buttonDecrypt.UseVisualStyleBackColor = true;
+            this.buttonDecrypt.Click += new System.EventHandler(this.buttonDecrypt_Click);
             // 
             // buttonEncrypt
             // 
@@ -131,6 +134,10 @@
             this.richTextBoxFile.TabIndex = 16;
             this.richTextBoxFile.Text = "";
             // 
+            // openRSAKey
+            // 
+            this.openRSAKey.FileName = "openFileDialog1";
+            // 
             // formRSA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,7 +149,7 @@
             this.Controls.Add(this.richTextBoxFile);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonOpenAESKey);
+            this.Controls.Add(this.buttonOpenRSAKey);
             this.Controls.Add(this.textBoxKeyLocation);
             this.Controls.Add(this.buttonOpenFileDialog);
             this.Controls.Add(this.textBoxFileLocation);
@@ -157,7 +164,7 @@
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonOpenAESKey;
+        private System.Windows.Forms.Button buttonOpenRSAKey;
         private System.Windows.Forms.TextBox textBoxKeyLocation;
         private System.Windows.Forms.Button buttonOpenFileDialog;
         private System.Windows.Forms.TextBox textBoxFileLocation;
@@ -166,5 +173,6 @@
         private System.Windows.Forms.Button buttonDecrypt;
         private System.Windows.Forms.Button buttonEncrypt;
         private System.Windows.Forms.RichTextBox richTextBoxFile;
+        private System.Windows.Forms.OpenFileDialog openRSAKey;
     }
 }
