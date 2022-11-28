@@ -72,6 +72,9 @@
     <EmbeddedResource Include="formAES.resx">
       <DependentUpon>formAES.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="formRSA.resx">
+      <DependentUpon>formRSA.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
