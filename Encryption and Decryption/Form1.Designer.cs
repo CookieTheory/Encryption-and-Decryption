@@ -34,7 +34,7 @@
             // 
             // buttonAES
             // 
-            this.buttonAES.Location = new System.Drawing.Point(81, 79);
+            this.buttonAES.Location = new System.Drawing.Point(12, 12);
             this.buttonAES.Name = "buttonAES";
             this.buttonAES.Size = new System.Drawing.Size(202, 40);
             this.buttonAES.TabIndex = 0;
@@ -44,7 +44,7 @@
             // 
             // buttonRSA
             // 
-            this.buttonRSA.Location = new System.Drawing.Point(81, 146);
+            this.buttonRSA.Location = new System.Drawing.Point(12, 58);
             this.buttonRSA.Name = "buttonRSA";
             this.buttonRSA.Size = new System.Drawing.Size(202, 40);
             this.buttonRSA.TabIndex = 1;
@@ -56,11 +56,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(226, 111);
             this.Controls.Add(this.buttonRSA);
             this.Controls.Add(this.buttonAES);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "AES/RSA";
             this.ResumeLayout(false);
 
         }
