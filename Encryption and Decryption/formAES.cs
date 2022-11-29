@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.IO.Pipes;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Encryption_and_Decryption
 {
     public partial class formAES : Form
     {
-        string fileLocation = "";
-        string fileText = "";
-        string decryptFilepath = "";
-        AesCryptoServiceProvider decryptAes = new AesCryptoServiceProvider();
-        byte[] data;
+        private string fileLocation = "";
+        private string fileText = "";
+        private string decryptFilepath = "";
+        private AesCryptoServiceProvider decryptAes = new AesCryptoServiceProvider();
+        private byte[] data;
         public formAES()
         {
             InitializeComponent();
@@ -81,7 +73,7 @@ namespace Encryption_and_Decryption
             richTextBoxResult.Text = decrypt;
         }
 
-        byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
+        private byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
         {
             // Check arguments.dsad
             if (plainText == null || plainText.Length <= 0)
@@ -121,7 +113,7 @@ namespace Encryption_and_Decryption
             return encrypted;
         }
 
-        static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key, byte[] IV)
+        private static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key, byte[] IV)
         {
             // Check arguments.
             if (cipherText == null || cipherText.Length <= 0)
