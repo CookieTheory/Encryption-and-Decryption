@@ -41,16 +41,16 @@
             this.richTextBoxFile = new System.Windows.Forms.RichTextBox();
             this.openRSAKey = new System.Windows.Forms.OpenFileDialog();
             this.groupBoxHash = new System.Windows.Forms.GroupBox();
-            this.richTextBoxHash = new System.Windows.Forms.RichTextBox();
-            this.buttonHash = new System.Windows.Forms.Button();
-            this.buttonSign = new System.Windows.Forms.Button();
-            this.richTextBoxSignResult = new System.Windows.Forms.RichTextBox();
+            this.textBoxCheckResult = new System.Windows.Forms.TextBox();
+            this.richTextBoxSign = new System.Windows.Forms.RichTextBox();
+            this.buttonCheckSignature = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonOpenSignature = new System.Windows.Forms.Button();
             this.textBoxSignedLocation = new System.Windows.Forms.TextBox();
-            this.buttonCheckSignature = new System.Windows.Forms.Button();
-            this.richTextBoxSign = new System.Windows.Forms.RichTextBox();
-            this.textBoxCheckResult = new System.Windows.Forms.TextBox();
+            this.richTextBoxSignResult = new System.Windows.Forms.RichTextBox();
+            this.buttonSign = new System.Windows.Forms.Button();
+            this.buttonHash = new System.Windows.Forms.Button();
+            this.richTextBoxHash = new System.Windows.Forms.RichTextBox();
             this.openFileSigned = new System.Windows.Forms.OpenFileDialog();
             this.groupBoxHash.SuspendLayout();
             this.SuspendLayout();
@@ -113,15 +113,15 @@
             // 
             // richTextBoxResult
             // 
-            this.richTextBoxResult.Location = new System.Drawing.Point(15, 235);
+            this.richTextBoxResult.Location = new System.Drawing.Point(15, 236);
             this.richTextBoxResult.Name = "richTextBoxResult";
-            this.richTextBoxResult.Size = new System.Drawing.Size(356, 95);
+            this.richTextBoxResult.Size = new System.Drawing.Size(356, 97);
             this.richTextBoxResult.TabIndex = 19;
             this.richTextBoxResult.Text = "";
             // 
             // buttonDecrypt
             // 
-            this.buttonDecrypt.Location = new System.Drawing.Point(194, 195);
+            this.buttonDecrypt.Location = new System.Drawing.Point(194, 196);
             this.buttonDecrypt.Name = "buttonDecrypt";
             this.buttonDecrypt.Size = new System.Drawing.Size(177, 34);
             this.buttonDecrypt.TabIndex = 18;
@@ -131,7 +131,7 @@
             // 
             // buttonEncrypt
             // 
-            this.buttonEncrypt.Location = new System.Drawing.Point(15, 195);
+            this.buttonEncrypt.Location = new System.Drawing.Point(15, 196);
             this.buttonEncrypt.Name = "buttonEncrypt";
             this.buttonEncrypt.Size = new System.Drawing.Size(177, 34);
             this.buttonEncrypt.TabIndex = 17;
@@ -143,7 +143,7 @@
             // 
             this.richTextBoxFile.Location = new System.Drawing.Point(15, 94);
             this.richTextBoxFile.Name = "richTextBoxFile";
-            this.richTextBoxFile.Size = new System.Drawing.Size(356, 95);
+            this.richTextBoxFile.Size = new System.Drawing.Size(356, 96);
             this.richTextBoxFile.TabIndex = 16;
             this.richTextBoxFile.Text = "";
             // 
@@ -163,20 +163,82 @@
             this.groupBoxHash.Controls.Add(this.buttonSign);
             this.groupBoxHash.Controls.Add(this.buttonHash);
             this.groupBoxHash.Controls.Add(this.richTextBoxHash);
-            this.groupBoxHash.Location = new System.Drawing.Point(378, 13);
+            this.groupBoxHash.Location = new System.Drawing.Point(378, 12);
             this.groupBoxHash.Name = "groupBoxHash";
-            this.groupBoxHash.Size = new System.Drawing.Size(368, 317);
+            this.groupBoxHash.Size = new System.Drawing.Size(368, 321);
             this.groupBoxHash.TabIndex = 20;
             this.groupBoxHash.TabStop = false;
             this.groupBoxHash.Text = "Hash i digitalni potpis";
             // 
-            // richTextBoxHash
+            // textBoxCheckResult
             // 
-            this.richTextBoxHash.Location = new System.Drawing.Point(6, 45);
-            this.richTextBoxHash.Name = "richTextBoxHash";
-            this.richTextBoxHash.Size = new System.Drawing.Size(356, 45);
-            this.richTextBoxHash.TabIndex = 17;
-            this.richTextBoxHash.Text = "";
+            this.textBoxCheckResult.Location = new System.Drawing.Point(6, 289);
+            this.textBoxCheckResult.Name = "textBoxCheckResult";
+            this.textBoxCheckResult.ReadOnly = true;
+            this.textBoxCheckResult.Size = new System.Drawing.Size(356, 20);
+            this.textBoxCheckResult.TabIndex = 26;
+            // 
+            // richTextBoxSign
+            // 
+            this.richTextBoxSign.Location = new System.Drawing.Point(6, 98);
+            this.richTextBoxSign.Name = "richTextBoxSign";
+            this.richTextBoxSign.Size = new System.Drawing.Size(356, 57);
+            this.richTextBoxSign.TabIndex = 25;
+            this.richTextBoxSign.Text = "";
+            // 
+            // buttonCheckSignature
+            // 
+            this.buttonCheckSignature.Location = new System.Drawing.Point(6, 263);
+            this.buttonCheckSignature.Name = "buttonCheckSignature";
+            this.buttonCheckSignature.Size = new System.Drawing.Size(356, 20);
+            this.buttonCheckSignature.TabIndex = 24;
+            this.buttonCheckSignature.Text = "Provjeri potpis";
+            this.buttonCheckSignature.UseVisualStyleBackColor = true;
+            this.buttonCheckSignature.Click += new System.EventHandler(this.buttonCheckSignature_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 158);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 23;
+            this.label3.Text = "Digitalni potpis:";
+            // 
+            // buttonOpenSignature
+            // 
+            this.buttonOpenSignature.Location = new System.Drawing.Point(325, 174);
+            this.buttonOpenSignature.Name = "buttonOpenSignature";
+            this.buttonOpenSignature.Size = new System.Drawing.Size(37, 20);
+            this.buttonOpenSignature.TabIndex = 22;
+            this.buttonOpenSignature.Text = "...";
+            this.buttonOpenSignature.UseVisualStyleBackColor = true;
+            this.buttonOpenSignature.Click += new System.EventHandler(this.buttonOpenSignature_Click);
+            // 
+            // textBoxSignedLocation
+            // 
+            this.textBoxSignedLocation.Location = new System.Drawing.Point(6, 174);
+            this.textBoxSignedLocation.Name = "textBoxSignedLocation";
+            this.textBoxSignedLocation.Size = new System.Drawing.Size(313, 20);
+            this.textBoxSignedLocation.TabIndex = 21;
+            // 
+            // richTextBoxSignResult
+            // 
+            this.richTextBoxSignResult.Location = new System.Drawing.Point(6, 200);
+            this.richTextBoxSignResult.Name = "richTextBoxSignResult";
+            this.richTextBoxSignResult.Size = new System.Drawing.Size(356, 57);
+            this.richTextBoxSignResult.TabIndex = 20;
+            this.richTextBoxSignResult.Text = "";
+            // 
+            // buttonSign
+            // 
+            this.buttonSign.Location = new System.Drawing.Point(6, 72);
+            this.buttonSign.Name = "buttonSign";
+            this.buttonSign.Size = new System.Drawing.Size(356, 20);
+            this.buttonSign.TabIndex = 19;
+            this.buttonSign.Text = "Potpiši";
+            this.buttonSign.UseVisualStyleBackColor = true;
+            this.buttonSign.Click += new System.EventHandler(this.buttonSign_Click);
             // 
             // buttonHash
             // 
@@ -188,72 +250,13 @@
             this.buttonHash.UseVisualStyleBackColor = true;
             this.buttonHash.Click += new System.EventHandler(this.buttonHash_Click);
             // 
-            // buttonSign
+            // richTextBoxHash
             // 
-            this.buttonSign.Location = new System.Drawing.Point(6, 96);
-            this.buttonSign.Name = "buttonSign";
-            this.buttonSign.Size = new System.Drawing.Size(356, 20);
-            this.buttonSign.TabIndex = 19;
-            this.buttonSign.Text = "Potpiši";
-            this.buttonSign.UseVisualStyleBackColor = true;
-            // 
-            // richTextBoxSignResult
-            // 
-            this.richTextBoxSignResult.Location = new System.Drawing.Point(6, 212);
-            this.richTextBoxSignResult.Name = "richTextBoxSignResult";
-            this.richTextBoxSignResult.Size = new System.Drawing.Size(356, 45);
-            this.richTextBoxSignResult.TabIndex = 20;
-            this.richTextBoxSignResult.Text = "";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 170);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 13);
-            this.label3.TabIndex = 23;
-            this.label3.Text = "Digitalni potpis:";
-            // 
-            // buttonOpenSignature
-            // 
-            this.buttonOpenSignature.Location = new System.Drawing.Point(325, 186);
-            this.buttonOpenSignature.Name = "buttonOpenSignature";
-            this.buttonOpenSignature.Size = new System.Drawing.Size(37, 20);
-            this.buttonOpenSignature.TabIndex = 22;
-            this.buttonOpenSignature.Text = "...";
-            this.buttonOpenSignature.UseVisualStyleBackColor = true;
-            // 
-            // textBoxSignedLocation
-            // 
-            this.textBoxSignedLocation.Location = new System.Drawing.Point(6, 186);
-            this.textBoxSignedLocation.Name = "textBoxSignedLocation";
-            this.textBoxSignedLocation.Size = new System.Drawing.Size(313, 20);
-            this.textBoxSignedLocation.TabIndex = 21;
-            // 
-            // buttonCheckSignature
-            // 
-            this.buttonCheckSignature.Location = new System.Drawing.Point(6, 263);
-            this.buttonCheckSignature.Name = "buttonCheckSignature";
-            this.buttonCheckSignature.Size = new System.Drawing.Size(356, 20);
-            this.buttonCheckSignature.TabIndex = 24;
-            this.buttonCheckSignature.Text = "Provjeri potpis";
-            this.buttonCheckSignature.UseVisualStyleBackColor = true;
-            // 
-            // richTextBoxSign
-            // 
-            this.richTextBoxSign.Location = new System.Drawing.Point(6, 122);
-            this.richTextBoxSign.Name = "richTextBoxSign";
-            this.richTextBoxSign.Size = new System.Drawing.Size(356, 45);
-            this.richTextBoxSign.TabIndex = 25;
-            this.richTextBoxSign.Text = "";
-            // 
-            // textBoxCheckResult
-            // 
-            this.textBoxCheckResult.Location = new System.Drawing.Point(6, 289);
-            this.textBoxCheckResult.Name = "textBoxCheckResult";
-            this.textBoxCheckResult.ReadOnly = true;
-            this.textBoxCheckResult.Size = new System.Drawing.Size(356, 20);
-            this.textBoxCheckResult.TabIndex = 26;
+            this.richTextBoxHash.Location = new System.Drawing.Point(6, 45);
+            this.richTextBoxHash.Name = "richTextBoxHash";
+            this.richTextBoxHash.Size = new System.Drawing.Size(356, 21);
+            this.richTextBoxHash.TabIndex = 17;
+            this.richTextBoxHash.Text = "";
             // 
             // openFileSigned
             // 

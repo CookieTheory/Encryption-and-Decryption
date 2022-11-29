@@ -17,7 +17,8 @@ namespace Encryption_and_Decryption
     {
         private string fileLocation = "";
         private string fileText = "";
-        string decryptFilepath = "";
+        private string decryptFilepath = "";
+        private string signedLocation = "";
         private RSAParameters helperRSA = new RSAParameters();
         private byte[] decryptData = null;
         private byte[] data;
@@ -95,7 +96,7 @@ namespace Encryption_and_Decryption
                     }
                     else helperRSA = LoadPublicKey(decryptFilepath);
                     byte[] encryptedData = RSAEncrypt(dataToEncrypt, helperRSA, false);
-                    if(encryptedData != null)
+                    if (encryptedData != null)
                     {
                         SaveEncryptedFile(encryptedData, "rsa_enkriptirano");
                         richTextBoxResult.Text = Convert.ToBase64String(encryptedData);
@@ -356,7 +357,8 @@ namespace Encryption_and_Decryption
                         data = LoadEncryptedFile(data, fileLocation);
                         fileText = Convert.ToBase64String(data);
 
-                    }else
+                    }
+                    else
                     {
                         UnicodeEncoding ByteConverter = new UnicodeEncoding();
                         data = ByteConverter.GetBytes(fileText);
@@ -371,6 +373,31 @@ namespace Encryption_and_Decryption
                 openFileRSA.FileName = "";
                 textBoxFileLocation.Text = openFileRSA.FileName;
                 fileLocation = openFileRSA.FileName;
+            }
+        }
+
+        private void buttonSign_Click(object sender, EventArgs e)
+        {
+            byte[] signedData;
+            try
+            {
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+                    helperRSA = LoadPrivateKey(decryptFilepath);
+                    decryptData = LoadEncryptedFile(decryptData, fileLocation);
+                    byte[] dataToSign = decryptData;
+
+                    signedData = SignBytes(dataToSign, helperRSA);
+                }
+                if (signedData != null)
+                {
+                    SaveEncryptedFile(signedData, "rsa_digitalni_potpis");
+                    richTextBoxSign.Text = Convert.ToBase64String(signedData);
+                }
+            }
+            catch
+            {
+
             }
         }
 
@@ -390,6 +417,99 @@ namespace Encryption_and_Decryption
                     MessageBox.Show("Neuspješno hashiranje.");
                 }
                 return hashValue;
+            }
+        }
+
+        private static byte[] SignBytes(byte[] DataToSign, RSAParameters Key)
+        {
+            try
+            {
+                RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
+
+                RSAalg.ImportParameters(Key);
+
+                return RSAalg.SignData(DataToSign, SHA256.Create());
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private void buttonOpenSignature_Click(object sender, EventArgs e)
+        {
+            openFileSigned.Filter = "Text File|*.txt";
+            openFileSigned.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileSigned.Title = "Open signed file to check digital signature";
+            openFileSigned.ShowDialog();
+
+            textBoxSignedLocation.Text = openFileSigned.FileName;
+            signedLocation = openFileSigned.FileName;
+
+            try
+            {
+                using (var sr = new StreamReader(signedLocation, Encoding.UTF8))
+                {
+                    fileText = sr.ReadToEnd(); if (fileText.Contains("�"))
+                    {
+                        data = LoadEncryptedFile(data, signedLocation);
+                        fileText = Convert.ToBase64String(data);
+                    }
+                    richTextBoxSignResult.Text = fileText;
+                }
+            }
+            catch
+            {
+                openFileRSA.FileName = "";
+                textBoxFileLocation.Text = openFileRSA.FileName;
+                fileLocation = openFileRSA.FileName;
+            }
+        }
+
+        private void buttonCheckSignature_Click(object sender, EventArgs e)
+        {
+            bool check = false;
+            byte[] signedData = null;
+            try
+            {
+                using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+                {
+                    helperRSA = LoadPrivateKey(decryptFilepath);
+                    decryptData = LoadEncryptedFile(decryptData, fileLocation);
+                    signedData = LoadEncryptedFile(signedData, signedLocation);
+                    byte[] data = decryptData;
+
+                    check = VerifySignedHash(data, signedData, helperRSA);
+                }
+                if (check) textBoxCheckResult.Text = "Digitalni potpis je ispravan";
+                else textBoxCheckResult.Text = "Digitalni potpis je neispravan";
+            }
+            catch
+            {
+
+            }
+        }
+
+        private static bool VerifySignedHash(byte[] DataToVerify, byte[] SignedData, RSAParameters Key)
+        {
+            try
+            {
+                // Create a new instance of RSACryptoServiceProvider using the
+                // key from RSAParameters.
+                RSACryptoServiceProvider RSAalg = new RSACryptoServiceProvider();
+
+                RSAalg.ImportParameters(Key);
+
+                // Verify the data using the signature.  Pass a new instance of SHA256
+                // to specify the hashing algorithm.
+                return RSAalg.VerifyData(DataToVerify, SHA256.Create(), SignedData);
+            }
+            catch (CryptographicException e)
+            {
+                Console.WriteLine(e.Message);
+
+                return false;
+
             }
         }
     }
