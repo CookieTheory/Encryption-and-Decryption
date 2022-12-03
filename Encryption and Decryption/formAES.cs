@@ -69,6 +69,7 @@ namespace Encryption_and_Decryption
             data = LoadEncryptedFile(data, fileLocation);
             LoadIVAndKey(decryptAes, decryptFilepath);
             string decrypt = DecryptStringFromBytes_Aes(data, decryptAes.Key, decryptAes.IV);
+            SaveDecryptedFile(decrypt, "aes_dekriptirano");
 
             richTextBoxResult.Text = decrypt;
         }
@@ -201,6 +202,21 @@ namespace Encryption_and_Decryption
 
                     }
                 }
+            }
+        }
+
+        private static void SaveDecryptedFile(string decryptedText, string filename)
+        {
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            using (FileStream fileStream = new FileStream(directory + "/" + filename + ".txt", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] data = new UTF8Encoding(true).GetBytes(decryptedText);
+                fileStream.Write(data, 0, data.Length);
             }
         }
 

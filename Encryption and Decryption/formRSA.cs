@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Encryption_and_Decryption
 {
@@ -135,6 +137,8 @@ namespace Encryption_and_Decryption
                     //(using RSACryptoServiceProvider.ExportParameters(true),
                     //and a boolean flag specifying no OAEP padding.
                     decryptedData = RSADecrypt(encryptedData, helperRSA, false);
+                    Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
+                    SaveDecryptedFile(ByteConverter.GetString(decryptedData), "rsa_dekriptirano");
                     /*
                     //Display the decrypted plaintext to the console. 
                     Console.WriteLine("Encrypted plaintext: {0}", ByteConverter.GetString(encryptedData));
@@ -334,6 +338,21 @@ namespace Encryption_and_Decryption
                     text = binaryReader.ReadBytes(binaryReader.ReadInt32());
                     return text;
                 }
+            }
+        }
+
+        private static void SaveDecryptedFile(string decryptedText, string filename)
+        {
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            using (FileStream fileStream = new FileStream(directory + "/" + filename + ".txt", FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                byte[] data = new UTF8Encoding(true).GetBytes(decryptedText);
+                fileStream.Write(data, 0, data.Length);
             }
         }
 
