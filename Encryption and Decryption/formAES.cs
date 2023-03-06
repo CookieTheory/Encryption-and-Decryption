@@ -69,7 +69,7 @@ namespace Encryption_and_Decryption
             data = LoadEncryptedFile(data, fileLocation);
             LoadIVAndKey(decryptAes, decryptFilepath);
             string decrypt = DecryptStringFromBytes_Aes(data, decryptAes.Key, decryptAes.IV);
-            SaveDecryptedFile(decrypt, "aes_dekriptirano");
+            SaveDecryptedFile(decrypt, "aes_decrypted");
 
             richTextBoxResult.Text = decrypt;
         }
@@ -162,13 +162,13 @@ namespace Encryption_and_Decryption
 
         private static void SaveIVAndKey(Aes myaes)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            using (FileStream fileStream = new FileStream(directory+"/tajni_kljuc.txt", FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(directory+"/secret_key.txt", FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -182,13 +182,13 @@ namespace Encryption_and_Decryption
 
         private static void SaveEncryptedFile(byte[] encryptedFile)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            using (FileStream fileStream = new FileStream(directory + "/aes_enkriptirano.txt", FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(directory + "/aes_encrypted.txt", FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -207,7 +207,7 @@ namespace Encryption_and_Decryption
 
         private static void SaveDecryptedFile(string decryptedText, string filename)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -235,14 +235,14 @@ namespace Encryption_and_Decryption
                         }
                         catch
                         {
-                            MessageBox.Show("Odabrana datoteka nije tajni ključ");
+                            MessageBox.Show("Selected file is not secret key");
                         }
                     }
                 }
             }
             catch
             {
-                MessageBox.Show("Za dekripciju potreban je tajni ključ");
+                MessageBox.Show("For decryption you need secret key");
             }
         }
 

@@ -93,7 +93,7 @@ namespace Encryption_and_Decryption
                     byte[] encryptedData = RSAEncrypt(dataToEncrypt, helperRSA, false);
                     if (encryptedData != null)
                     {
-                        SaveEncryptedFile(encryptedData, "rsa_enkriptirano");
+                        SaveEncryptedFile(encryptedData, "rsa_encrypted");
                         richTextBoxResult.Text = Convert.ToBase64String(encryptedData);
                     }
 
@@ -111,7 +111,7 @@ namespace Encryption_and_Decryption
             }
             catch
             {
-                MessageBox.Show("RSA Service not working / 091");
+                MessageBox.Show("RSA Service not working / 081");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Encryption_and_Decryption
                     //and a boolean flag specifying no OAEP padding.
                     decryptedData = RSADecrypt(encryptedData, helperRSA, false);
                     Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
-                    SaveDecryptedFile(ByteConverter.GetString(decryptedData), "rsa_dekriptirano");
+                    SaveDecryptedFile(ByteConverter.GetString(decryptedData), "rsa_decrypted");
                     /*
                     //Display the decrypted plaintext to the console. 
                     Console.WriteLine("Encrypted plaintext: {0}", ByteConverter.GetString(encryptedData));
@@ -150,7 +150,7 @@ namespace Encryption_and_Decryption
             }
             catch
             {
-                MessageBox.Show("RSA Service not working / 132");
+                MessageBox.Show("RSA Service not working / 130");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Encryption_and_Decryption
 
         private static void SaveEncryptedFile(byte[] encryptedFile, string filename)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -240,13 +240,13 @@ namespace Encryption_and_Decryption
 
         private static void SavePrivateAndPublicKey(RSAParameters RSAParams)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            using (FileStream fileStream = new FileStream(directory + "/privatni_kljuc.txt", FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(directory + "/private_key.txt", FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -269,7 +269,7 @@ namespace Encryption_and_Decryption
                 }
             }
 
-            using (FileStream fileStream = new FileStream(directory + "/javni_kljuc.txt", FileMode.OpenOrCreate, FileAccess.Write))
+            using (FileStream fileStream = new FileStream(directory + "/public_key.txt", FileMode.OpenOrCreate, FileAccess.Write))
             {
                 using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
                 {
@@ -295,7 +295,7 @@ namespace Encryption_and_Decryption
                     }
                     catch
                     {
-                        MessageBox.Show("Odabrana datoteka nije javni ključ");
+                        MessageBox.Show("Selected file is not public key");
                     }
                 }
             }
@@ -322,7 +322,7 @@ namespace Encryption_and_Decryption
                     }
                     catch
                     {
-                        MessageBox.Show("Odabrana datoteka nije privatni ključ");
+                        MessageBox.Show("Selected file is not private key");
                     }
                 }
             }
@@ -343,7 +343,7 @@ namespace Encryption_and_Decryption
 
         private static void SaveDecryptedFile(string decryptedText, string filename)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/OS2 Projekt";
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Encryption and Decryption CookieTheory";
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -403,7 +403,7 @@ namespace Encryption_and_Decryption
                 }
                 if (signedData != null)
                 {
-                    SaveEncryptedFile(signedData, "rsa_digitalni_potpis");
+                    SaveEncryptedFile(signedData, "rsa_digital_signature");
                     richTextBoxSign.Text = Convert.ToBase64String(signedData);
                 }
             }
@@ -426,7 +426,7 @@ namespace Encryption_and_Decryption
                 }
                 catch
                 {
-                    MessageBox.Show("Neuspješno hashiranje.");
+                    MessageBox.Show("Unsuccessful hashing.");
                 }
                 return hashValue;
             }
@@ -493,8 +493,8 @@ namespace Encryption_and_Decryption
 
                     check = VerifySignedHash(data, signedData, helperRSA);
                 }
-                if (check) textBoxCheckResult.Text = "Digitalni potpis je ispravan";
-                else textBoxCheckResult.Text = "Digitalni potpis je neispravan";
+                if (check) textBoxCheckResult.Text = "Digital signature is correct";
+                else textBoxCheckResult.Text = "Digital signature is incorrect";
             }
             catch
             {
